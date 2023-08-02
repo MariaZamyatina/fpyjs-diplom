@@ -77,6 +77,5 @@ class VK {
     // Обновите свойство `lastCallback` на функцию "пустышку" `() => {}`
     //VK.lastCallback.callbackFn = () => {};
 
-    //return arrayMaxSizePhotos;
   };
 };

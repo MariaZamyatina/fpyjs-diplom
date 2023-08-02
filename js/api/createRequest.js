@@ -8,13 +8,6 @@ const createRequest = (options = {}) => {
     console.log('way',way)
     const urlPhoto = encodeURIComponent(options.data.url);
 
-    // let url = Yandex.HOST + options.path + `?path=${encodeURIComponent(options.data.way)}` + 
-    // `&url=${encodeURIComponent(options.data.url)}` + 
-    // (options.data.mediaType ? `?media_type=${options.data.mediaType}`
-    //         : "") +
-    //       (options.data.limit >= 0 ? `&limit=${options.data.limit}` : "");
-    // console.log('url',url);
-
     let response = await fetch(
         
       Yandex.HOST +
@@ -35,16 +28,7 @@ const createRequest = (options = {}) => {
         Authorization: options.headers.Authorization,
       },
     }
-        
-        
-    //     url, {
-    //     method: options.metod,
-    //     headers: {
-    //         Authorization: options.headers.Authorization,
-    //     },
-    // }
-    // );
-    )
+  )
   
 
   let result;
