@@ -6,14 +6,7 @@
  * */
 
 class VK {
-<<<<<<< HEAD
-
-  static ACCESS_TOKEN = `vk1.a.JYQjnz3ZIrriAYIDGwGg7f9R4ApMhasWUZwbxdzeUehK3oWmpAL8_JE-6jYXl-LbGxTlYTEVjRWawENTVNlZNj9so9gQVLeUS-uxYihBYxQpJm0Qzj6IeuUsSHYMLebhI55GhwI8zEgx1wg7TQbpON-2FigbI_d0tuC4ZB0U-QcsDgK36BSxVvZHvcHe-DvN7X6CNx6rRR66MjfjLNYerw`;
-  // static ACCESS_TOKEN = `958eb5d439726565e9333aa30e50e0f937ee432e927f0dbd541c541887d919a7c56f95c04217915c32008`;
-
-=======
   
->>>>>>> b176cc862fc9c759e56b6b515a4019190c69a5a8
   static lastCallback = {
     callback : function (result) {
       VK.processData(result);
