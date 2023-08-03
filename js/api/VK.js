@@ -7,9 +7,9 @@
 
 class VK {
 
-  static ACCESS_TOKEN = "";
+  static ACCESS_TOKEN = "vk1.a.JYQjnz3ZIrriAYIDGwGg7f9R4ApMhasWUZwbxdzeUehK3oWmpAL8_JE-6jYXl-LbGxTlYTEVjRWawENTVNlZNj9so9gQVLeUS-uxYihBYxQpJm0Qzj6IeuUsSHYMLebhI55GhwI8zEgx1wg7TQbpON-2FigbI_d0tuC4ZB0U-QcsDgK36BSxVvZHvcHe-DvN7X6CNx6rRR66MjfjLNYerw";
   static lastCallback = {
-    callback : function (result) {
+    callback : (result) => {
       VK.processData(result);
     },
   }
@@ -38,21 +38,30 @@ class VK {
    * Является обработчиком ответа от сервера.
    */
   static processData(result) {
-    // удалить тег `script`, который добавлялся для выполнения запроса
-    const el = document.querySelector('head').querySelector('script');
-    el.remove();
-  
+    
+    if (result.error) {
+      alert(result.error.error_msg);
+      return;
+    }
+    if (result.response.items.length == 0) {
+      alert("у пользователя нет фото");
+      return;
+    }
     // В случае возникновения ошибки выводите её в `alert` и завершайте выполнение обработчика ответа от сервера.
     if (!result) {
       alert('Ошибка получения фотографий. Проверьте правильность id');
       return;
     }
+    // удалить тег `script`, который добавлялся для выполнения запроса
+    const el = document.querySelector('head').querySelector('script');
+    el.remove();
 
     if (VK.lastCallback.arrayPhotos) {
       VK.lastCallback.arrayPhotos = [];
     }
 
     // Поиск самых крупных изображений из ответа от сервера
+    
     const arrayPhoto = result.response.items; // массив фотографий
 
     let arrayMaxSizePhotos = [];

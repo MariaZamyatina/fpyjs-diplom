@@ -18,17 +18,9 @@ const createRequest = (options = {}) => {
     })
   
     let result;
-    try { 
-      result = await response.json();
-    } 
-    catch (syntaxError) {
-    result = null;
-    }
-    if (!response.ok && result !== null) {
-
-    } else {
+    result = await response.json();
     return options.callback(result);
-    }
+    
   })()
 }
 
