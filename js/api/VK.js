@@ -7,7 +7,7 @@
 
 class VK {
 
-  static ACCESS_TOKEN = "vk1.a.JYQjnz3ZIrriAYIDGwGg7f9R4ApMhasWUZwbxdzeUehK3oWmpAL8_JE-6jYXl-LbGxTlYTEVjRWawENTVNlZNj9so9gQVLeUS-uxYihBYxQpJm0Qzj6IeuUsSHYMLebhI55GhwI8zEgx1wg7TQbpON-2FigbI_d0tuC4ZB0U-QcsDgK36BSxVvZHvcHe-DvN7X6CNx6rRR66MjfjLNYerw";
+  static ACCESS_TOKEN = "";
   static lastCallback = {
     callback : (result) => {
       VK.processData(result);
