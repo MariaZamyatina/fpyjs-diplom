@@ -63,7 +63,8 @@ class FileUploaderModal extends BaseModal {
     images.forEach(image => {
       const html = this.getImageHTML(image);
       arrayHtml.push(html);
-    });
+    })
+
     const container = this.domElement.querySelector(".content");
     container.innerHTML = arrayHtml.join("")
 
@@ -89,8 +90,8 @@ class FileUploaderModal extends BaseModal {
   sendAllImages(images) {
     images.forEach(image => {
       this.sendImage(image);  
-    });
-  };
+    })
+  }
 
   /**
    * Валидирует изображение и отправляет его на сервер
@@ -117,7 +118,8 @@ class FileUploaderModal extends BaseModal {
       if (document.querySelector(".file-uploader-modal .content").children.length === 0) {
         this.close();
       } 
-    };
+    }
+
     Yandex.uploadFile(input, src, callback);
 
   }

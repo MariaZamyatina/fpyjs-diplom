@@ -16,7 +16,7 @@ class Yandex {
       localStorage.setItem(
         "yandexToken",
         prompt("Введите OAUth-токен от Яндекс.Диска")
-      );
+      )
     }
     return localStorage.getItem("yandexToken");
   }
@@ -34,7 +34,7 @@ class Yandex {
         Authorization: `OAuth ${token}`,
       },
       callback: callback,
-    });
+    })
 
   }
 
@@ -75,10 +75,8 @@ class Yandex {
    * Метод скачивания файлов
    */
   static downloadFileByUrl(url){
-    console.log('url',url)
     const link = document.createElement("a");
     link.href = url;
-    console.log(link);
     document.body.append(link);
     link.click();
     link.remove();

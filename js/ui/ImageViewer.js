@@ -5,7 +5,7 @@
 class ImageViewer {
   constructor( element ) {
     this.element = element;
-    this.imagesBlock = this.element.querySelector(".images-list .grid");
+    this.imagesBlock = this.element.querySelector(".images-list .grid .row");
     this.previewBlock = this.element.querySelector(".image");
     this.registerEvents();
   }
@@ -43,20 +43,17 @@ class ImageViewer {
         // *** Клик по кнопке "Выбрать всё" / "Снять выделение":
       if (event.target.classList.contains("select-all")) {
 
-          console.log(event.target)
-
           // Получает все изображения
           let photos = this.element.querySelectorAll("img");
-          console.log(photos)
+
           // Если во всех изображениях *хотябы одно* изображение имеет класс `selected`, 
-          if ([...photos].filter(c => c.classList.contains("selected")).length > 0) {
+          if ( [...photos].filter(c => c.className === "selected").length > 0 ) {
             // то этот класс необходимо удалить для всех изображений.
             photos.forEach(photo => {
 
               let interval = setInterval(() => {
-                console.log([...photos].filter(c => c.classList.contains("selected")).length)
                 photo.classList.remove("selected");
-                if ([...photos].filter(c => c.classList.contains("selected")).length === 0) {
+                if ([...photos].filter(c => c.className === "selected").length === 0) {
                   this.checkButtonText();
                   clearInterval(interval);
                 };
@@ -70,7 +67,7 @@ class ImageViewer {
             photos.forEach(photo => {
               let interval = setInterval(() => {
                 photo.classList.add("selected");
-                if ([...photos].filter(c => c.classList.contains("selected")).length === photos.length) {
+                if ( [...photos].filter(c => c.className === "selected").length === photos.length - 1) {
                   this.checkButtonText();
                   clearInterval(interval);
                 };
@@ -85,10 +82,8 @@ class ImageViewer {
           const modal = App.getModal("filePreviewer");
           modal.open();
           // отображаем большой лоадер
-          //const loader = this.element.getElementsByClassName("asterisk");
 
           const callback = (result) => {
-            console.log('result.items',result.items); // [{},{},]
             modal.showImages(result.items);
           };
 
@@ -108,24 +103,22 @@ class ImageViewer {
         }
 
     })
-  }
-  
-    
+  } 
 
   /**
    * Очищает отрисованные изображения
    */
-  static clear() {
-    let arrayPhotos = Array.from(document.querySelectorAll(".image-wrapper"));
-    arrayPhotos.forEach(photo => {
-      photo.remove();
-    });
-  };
+  clear() {
+
+    const el = document.querySelector(".images-list .grid .row");
+    el.innerHTML = "";
+   
+  }
 
   /**
    * Отрисовывает изображения.
   */
-  static drawImages(images) {
+  drawImages(images) {
     // Если количество изображений положительное, необходимо удалить класс `disabled` у кнопки "Выбрать всё" / "Снять выделение"
     if (images.length > 0) {
       document.querySelector(".select-all").classList.remove("disabled");
@@ -140,17 +133,11 @@ class ImageViewer {
     const el = document.querySelector(".images-list .grid .row");
     images.forEach((element) => {
     const newElement = document.createElement('DIV');
-    newElement.classList.add(
-      "four",
-      "wide",
-      "column",
-      "ui",
-      "medium",
-      "image-wrapper");
-      newElement.innerHTML = `<img src='${element}' />`;
-       el.appendChild(newElement);
-    });
-  };
+    newElement.classList.add( "four", "wide", "column", "ui", "medium", "image-wrapper");
+    newElement.innerHTML = `<img src='${element}' />`;
+    el.appendChild(newElement);
+    })
+  }
 
 
   /**
@@ -162,29 +149,23 @@ class ImageViewer {
     // Получите кнопки с классом `select-all` и `send`
     let buttonSelect = document.querySelector(".select-all");
     let buttonSend = document.querySelector(".send");
+
     // Если все полученные изображения имеют класс `selected`, то в кнопке `select-all` текст должен быть `"Снять выделение"`. 
     // В ином случае, текст должен быть `"Выбрать всё"`.
-
-    console.log('[...photos].filter(c => c.classList.contains("selected")).length',[...photos].filter(c => c.classList.contains("selected")).length)
-    console.log('photos.length',photos.length)
-    if ( [...photos].filter(c => c.classList.contains("selected")).length - 1 === photos.length - 1 ) { // -1 убираем изображение в отрисовке
+    if ( [...photos].filter(c => c.classList.contains("selected")).length === photos.length ) { 
 
       buttonSelect.textContent = "Снять выделение";
     }
     else {
       buttonSelect.textContent = "Выбрать всё";
-    };
+    }
     // Если есть хотябы одно изображение с классом `selected`, то в кнопке `send` необхоимо удалить класс `disabled`. 
     // В ином случае, добавляйте класс `disabled`.
-    if ([...photos].filter(c => c.classList.contains("selected")).length > 0) {
+    if ([...photos].filter(c => c.className === "selected").length > 0) {
       buttonSend.classList.remove("disabled");
     }
     else {
-      // console.log([...photos].filter(c => c.classList.contains("selected")).length)
-      // if (buttonSend.classList.contains("disabled")) {
-      //   buttonSend.classList.remove("disabled");
-      // }
       buttonSend.classList.add("disabled");
-    };
+    }
   }
 }

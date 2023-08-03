@@ -6,12 +6,13 @@
  * */
 
 class VK {
-  
+
+  static ACCESS_TOKEN = "";
   static lastCallback = {
     callback : function (result) {
       VK.processData(result);
     },
-    };  //. {count: 4, items: Array(4)}
+  }
 
 
   /**
@@ -29,7 +30,7 @@ class VK {
       script.src = url;
       document.getElementsByTagName("head")[0].appendChild(script);
     })()
-  };
+  }
 
 
   /**
@@ -47,12 +48,13 @@ class VK {
       return;
     }
 
-    // if (VK.lastCallback.listFromCallback) {
-    //   VK.lastCallback.listFromCallback = [];
-    // }
+    if (VK.lastCallback.arrayPhotos) {
+      VK.lastCallback.arrayPhotos = [];
+    }
+
     // Поиск самых крупных изображений из ответа от сервера
     const arrayPhoto = result.response.items; // массив фотографий
-    console.log(arrayPhoto)
+
     let arrayMaxSizePhotos = [];
 
     arrayPhoto.forEach(element => {
@@ -61,19 +63,15 @@ class VK {
     const max = element.sizes.reduce(function ( maxValue, currentValue ) {
       maxValue = maxValue > currentValue.height ? maxValue : currentValue.height;
       return maxValue;
-      });
+    })
   
     url = element.sizes.filter(el => el.height == max)[0].url;
       
     arrayMaxSizePhotos.push(url);
-  });
+  })
 
     // передаем изображения в колбек, который передавался в метод `VK.get`, который сохранялся в `lastCallback`.
     VK.lastCallback.arrayPhotos = arrayMaxSizePhotos;
   
-    // Обновите свойство `lastCallback` на функцию "пустышку" `() => {}`
-    //VK.lastCallback.callbackFn = () => {};
-
-
-  };
-};
+  }
+}

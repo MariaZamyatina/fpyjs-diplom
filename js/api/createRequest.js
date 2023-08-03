@@ -25,7 +25,7 @@ const createRequest = (options = {}) => {
     result = null;
     }
     if (!response.ok && result !== null) {
-    console.log(result.message);
+
     } else {
     return options.callback(result);
     }

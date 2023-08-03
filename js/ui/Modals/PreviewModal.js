@@ -31,13 +31,12 @@ class PreviewModal extends BaseModal {
       // * Отправляет запрос на удаление изображения, если клик был на кнопке delete
       // * Скачивает изображение, если клик был на кнопке download
       if (event.target.classList.contains("delete")) {
-        console.log(event.target);
+
         const i = event.target.querySelector("i");
         i.className = "icon spinner loading";
         event.target.classList.add("disabled");
         // запрос на удаление файла (с помощью метода `Yandex.removeFile`)
         const path = event.target.getAttribute("data-path");
-        console.log(path)
         let callback = (result) => {
           if (result === null) {
           // удаляем весь блок с информацией об изображении
@@ -50,8 +49,6 @@ class PreviewModal extends BaseModal {
       if (event.target.classList.contains("download")) {
         
         const url = event.target.getAttribute("data-file");
-        console.log(url)
-
         Yandex.downloadFileByUrl(url);
         
       }
@@ -68,14 +65,15 @@ class PreviewModal extends BaseModal {
    * Отрисовывает изображения в блоке всплывающего окна
    */
   showImages(data) {
-    console.log(data);
+
     const arrayHtml = [];
     data.forEach(item => {
       const html = this.getImageInfo(item);
       arrayHtml.push(html);
     });
     const container = this.domElement.querySelector(".content");
-    container.innerHTML = arrayHtml.join("")
+    container.innerHTML = arrayHtml.join("");
+
   }
 
   /**
@@ -97,7 +95,7 @@ class PreviewModal extends BaseModal {
    * Возвращает разметку из изображения, таблицы с описанием данных изображения и кнопок контроллеров (удаления и скачивания)
    */
   getImageInfo(item) {
-    const name = item.name.substring(0, item.name.indexOf("."));
+
     const size = (Math.round((Number(item.size) / 1024) * 100) / 100).toFixed(2);
     const html = `
     <div class="image-preview-container">

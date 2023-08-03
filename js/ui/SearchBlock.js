@@ -28,9 +28,10 @@ class SearchBlock {
         }
         
         // Выполняем запрос на сервер для получения изображений
-        SearchBlock.addPhotos(input);
+        App.searchBlock.addPhotos(input);
       }
-      // ели нажата кнопка заменить
+
+      // *** еcли нажата кнопка заменить
       if (event.target.classList.contains("replace")) {
 
         const input = event.target.closest('div.search-block').children[0].value;
@@ -40,31 +41,29 @@ class SearchBlock {
           return;
         }
 
-        // удаляем отрисованные изображения  
-        ImageViewer.clear(); 
-        // Выполняем запрос на сервер для получения изображений
-        SearchBlock.addPhotos(input);
-      }
-  })
-  
-}
+        if (VK.lastCallback.arrayPhotos) {
+          delete VK.lastCallback.arrayPhotos;
+        }
 
-  static addPhotos(input) {
-    (() => {
-  // Выполняем запрос на сервер для получения изображени
-  VK.get(input);
-
-  let interval = setInterval(() => {
-    if (VK.lastCallback.arrayPhotos) {
-      ImageViewer.drawImages(VK.lastCallback.arrayPhotos);
-      clearInterval(interval);
-    }
-  }, 0);
-})();
-};
-
-}
+        App.imageViewer.clear();
     
+        App.searchBlock.addPhotos(input);
+      }
+    })
+  }
 
+  addPhotos(input) {
+    (() => {
+      // Выполняем запрос на сервер для получения изображени
+      VK.get(input);
 
-// 710698165
+      let interval = setInterval(() => {
+        if (VK.lastCallback.arrayPhotos) {
+          App.imageViewer.drawImages(VK.lastCallback.arrayPhotos);
+          clearInterval(interval);
+        }
+        
+      }, 0)
+    })()
+  }
+}
