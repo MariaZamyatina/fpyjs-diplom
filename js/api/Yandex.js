@@ -1,4 +1,4 @@
-//localStorage.clear();
+
 /**
  * Класс Yandex
  * Используется для управления облаком.
@@ -13,10 +13,15 @@ class Yandex {
   static getToken(){
     // Если в локалсторадж нет сохраненного апи яндекс, запрашиваем
     if (!localStorage.hasOwnProperty("yandexToken")) {
-      localStorage.setItem(
-        "yandexToken",
-        prompt("Введите OAUth-токен от Яндекс.Диска")
-      )
+      const token = prompt("Введите OAUth-токен от Яндекс.Диска");
+      if ( token.trim() === "" ) {
+        alert("необходимо ввести токен");
+        return null;
+      }
+      else {
+        localStorage.setItem(
+          "yandexToken", token)
+      }
     }
     return localStorage.getItem("yandexToken");
   }
@@ -60,6 +65,7 @@ class Yandex {
    */
   static getUploadedFiles(callback) {
     const token = this.getToken();
+
     return createRequest({
       method: "GET",
       path: "/resources/files",

@@ -39,10 +39,10 @@ class ImageViewer {
         // работоспособность кнопки "Отправить на диск". Для проверки кнопки, используется метод `checkButtonText`
         this.checkButtonText();
       }
-        
-        // *** Клик по кнопке "Выбрать всё" / "Снять выделение":
-      if (event.target.classList.contains("select-all")) {
-
+    })
+    
+    // *** Клик по кнопке "Выбрать всё" / "Снять выделение":
+    this.element.querySelector(".select-all").addEventListener("click", (event) => {
           // Получает все изображения
           let photos = this.element.querySelectorAll("img");
 
@@ -74,36 +74,42 @@ class ImageViewer {
               }, 0);
             }); 
           };
-        };
+        });
 
         // *** Клик по кнопке "Посмотреть загруженные файлы"
-        if (event.target.classList.contains( "show-uploaded-files" )) {
-          // получаем модальное окно
-          const modal = App.getModal("filePreviewer");
-          modal.open();
-          // отображаем большой лоадер
+    this.element.querySelector(".show-uploaded-files").addEventListener("click", (event) => {
 
-          const callback = (result) => {
-            modal.showImages(result.items);
-          };
+      // смотрим есть ли токен яндекс
+      if (Yandex.getToken()) {
+        // получаем модальное окно
+        const modal = App.getModal("filePreviewer");
+        modal.open();
+        // отображаем большой лоадер
 
-          Yandex.getUploadedFiles(callback);
+        const callback = (result) => {
+        modal.showImages(result.items);
+        };
+
+        Yandex.getUploadedFiles(callback);
         }
+      else return;
+    })
 
         // *** Клик по кнопке "Отправить на диск"
-        if (event.target.classList.contains( "send" )) {
-          // С помощью метода `App.getModal` получает модальное окно [загрузки изображений]
-          const modal = App.getModal("fileUploader");
-          // Получите все выделенные изображения (с класом `selected`)
-          const photoSelected = [...this.element.querySelectorAll("img")].filter(e => e.className == "selected");
-          // Откройте полученное модальное окно (с помощью метода `open`)
-          modal.open();
-          // Отрисуйте все модальные изображения в открытом модальном окне с помощью метода `showImages` у объекта модального окна
-          modal.showImages(photoSelected);
-        }
-
+    this.element.querySelector(".send").addEventListener("click", (event) => {
+      if (Yandex.getToken()) {
+        // С помощью метода `App.getModal` получает модальное окно [загрузки изображений]
+        const modal = App.getModal("fileUploader");
+        // Получите все выделенные изображения (с класом `selected`)
+        const photoSelected = [...this.element.querySelectorAll("img")].filter(e => e.className == "selected");
+        // Откройте полученное модальное окно (с помощью метода `open`)
+        modal.open();
+        // Отрисуйте все модальные изображения в открытом модальном окне с помощью метода `showImages` у объекта модального окна
+        modal.showImages(photoSelected);
+      }
+      else return;
     })
-  } 
+  }
 
   /**
    * Очищает отрисованные изображения
